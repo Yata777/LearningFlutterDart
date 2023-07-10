@@ -1,7 +1,9 @@
 import 'package:example1/presentation/widgets/container_text_example.dart';
+import 'package:example1/presentation/widgets/page_view_example.dart';
 import 'package:example1/presentation/widgets/profile_pic.dart';
 import 'package:flutter/material.dart';
 
+import 'widgets/media_query_example.dart';
 import 'widgets/row_expanded_example.dart';
 
 class WidgetsExamplesPage extends StatelessWidget {
@@ -20,7 +22,8 @@ class WidgetsExamplesPage extends StatelessWidget {
           title: Text("myApp"),
           centerTitle: true,
         ),
-        body: Center(
+        body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Column(
@@ -30,9 +33,18 @@ class WidgetsExamplesPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const ContainerTextExample(),
-                SizedBox(height: 10),
+                SizedBox(height: 50),
                 RowExpandedExample(),
+                SizedBox(height: 50),
                 ProfilePicture(),
+                SizedBox(height: 50),
+                MediaQueryExample(), 
+                SizedBox(height: 50),
+                PageViewExample(),
+                IconButton(onPressed: (){}, icon: Icon(Icons.home, color:Colors.white)),
+                SizedBox(height:20),
+                TextButton(onPressed: (){}, child: Text("Text Button", style: TextStyle(color: Colors.black)))
+
               ],
             ),
           ),

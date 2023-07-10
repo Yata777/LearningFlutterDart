@@ -5,15 +5,13 @@ class ProfilePicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: Center(
-      child: Container(
-        height: 200,
-        width:200,
-        child: CircleAvatar(
-          radius: 200,
-          backgroundImage: const AssetImage("assets/images/p2.jpg"),
-        )
+    return Container(
+      height: 200,
+      width:200,
+      child: CircleAvatar(
+        radius: 200,
+        backgroundImage: const AssetImage("assets/images/makoto.png"),
       )
-    ),);
+    );
   }
 }
