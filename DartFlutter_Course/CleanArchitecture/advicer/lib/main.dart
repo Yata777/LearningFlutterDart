@@ -1,4 +1,7 @@
+import 'package:advicer/presentation/advicer/advicer_page.dart';
 import 'package:flutter/material.dart';
+
+import 'theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +13,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       title: 'Advicer',
-      home: Placeholder(),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.dark,
+      home: AdvicerPage(),
     );
   }
 }
