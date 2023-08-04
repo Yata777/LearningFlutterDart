@@ -1,5 +1,7 @@
+import 'package:advicer/application/advicer/advicer_bloc.dart';
 import 'package:advicer/presentation/advicer/advicer_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'theme.dart';
 
@@ -13,12 +15,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       title: 'Advicer',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,
-      home: AdvicerPage(),
+      home: BlocProvider(
+        create: (context) => AdvicerBloc(),
+        child: AdvicerPage(),
+      ),
     );
   }
 }
