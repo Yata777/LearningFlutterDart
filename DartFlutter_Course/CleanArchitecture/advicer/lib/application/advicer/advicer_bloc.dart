@@ -1,15 +1,18 @@
+import 'package:advicer/domain/entities/advice_Entity.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
+
+import '../../domain/failures/failures.dart';
+import '../../domain/usecases/advicer_usecases.dart';
 
 part 'advicer_event.dart';
 part 'advicer_state.dart';
 
 class AdvicerBloc extends Bloc<AdvicerEvent, AdvicerState> {
   AdvicerBloc() : super(AdvicerInitial()) {
-    //Simulate network 
-    Future sleep1(){
-      return Future.delayed(const Duration(seconds: 2), () => "1");
-    }
+    final usecases = AdvicerUsecases();
+   
 
     /*
     The bloc handles the state according to the event which it gets as an input.
@@ -18,10 +21,26 @@ class AdvicerBloc extends Bloc<AdvicerEvent, AdvicerState> {
     */
     on<AdviceRequestedEvent>((event, emit) async {
       emit(AdvicerStateLoading());
-      //do sth
-      await sleep1();
-      //get advice
-      emit(AdvicerStateLoaded(advice: "A free way is a free way - John Ruddy"));
+
+      Either<Failure, AdviceEntity> adviceOrFailure =
+          await usecases.getAdviceUsecase();
+
+      adviceOrFailure.fold(
+          (failure) =>
+              emit(AdvicerStateError(message: _mapFailureToMessage(failure))),
+          (advice) => emit(AdvicerStateLoaded(advice: advice.advice)));
     });
+  }
+
+   String _mapFailureToMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case ServerFailure:
+        return "API Error try again";
+      case GeneralFailure:
+        return "Sth gone wrong. try again";
+
+      default:
+        return "Sth gone wrong. try again";
+    }
   }
 }

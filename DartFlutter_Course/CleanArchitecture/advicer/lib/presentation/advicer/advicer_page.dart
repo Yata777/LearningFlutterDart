@@ -25,7 +25,7 @@ class AdvicerPage extends StatelessWidget {
               Expanded(
                 child: Center(
                   child: BlocBuilder<AdvicerBloc, AdvicerState>(
-                    bloc: BlocProvider.of<AdvicerBloc>(context)..add(AdviceRequestedEvent()),
+                    bloc: BlocProvider.of<AdvicerBloc>(context),
                     builder: ((context, adviceState) {
                       if (adviceState is AdvicerInitial){
                         return Text(
@@ -37,7 +37,7 @@ class AdvicerPage extends StatelessWidget {
                       }else if (adviceState is AdvicerStateLoaded){
                         return AdviceField(advice: adviceState.advice);
                       }else if(adviceState is AdvicerStateError){
-                        return ErrorMessage(message: "An error has occured",);
+                        return ErrorMessage(message: adviceState.message,);
                       }
                       return Placeholder();
                     }),
