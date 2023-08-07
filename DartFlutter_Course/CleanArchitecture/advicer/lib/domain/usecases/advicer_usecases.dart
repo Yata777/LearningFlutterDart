@@ -1,3 +1,5 @@
+import 'package:advicer/domain/repositories/advicer_repository.dart';
+
 import 'package:dartz/dartz.dart';
 
 import '../entities/advice_Entity.dart';
@@ -5,16 +7,13 @@ import '../failures/failures.dart';
 
 class AdvicerUsecases{
 
-  Future sleep1(){
-    return Future.delayed(Duration(seconds: 2), () => "1");
-  }
+ final AdvicerRepository advicerRepository;
+ AdvicerUsecases({required this.advicerRepository});
+ 
 
   Future<Either<Failure,AdviceEntity>> getAdviceUsecase() async{
 
     //call function from repo to get advice.
-
-    await sleep1();
-
-    return Right(AdviceEntity(advice: "A free way is a free way - John Ruddy", id:1));
+    return advicerRepository.getAdviceFromApi();
   }
 }
