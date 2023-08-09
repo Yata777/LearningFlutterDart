@@ -5,6 +5,7 @@ import 'package:advicer/infrastructure/repositories/advicer_repository_impl.dart
 import 'package:get_it/get_it.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'application/advicer/advicer_bloc.dart';
 import 'domain/repositories/advicer_repository.dart';
 
@@ -26,4 +27,6 @@ Future<void> init() async {
 
   //! extern
   sl.registerLazySingleton(() => http.Client());
+  final sharedPreferences = await SharedPreferences.getInstance();
+  sl.registerLazySingleton(() => sharedPreferences);
 }
