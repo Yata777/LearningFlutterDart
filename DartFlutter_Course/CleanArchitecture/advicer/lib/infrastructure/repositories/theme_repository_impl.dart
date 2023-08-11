@@ -23,4 +23,18 @@ class ThemeRepositoryImpl implements ThemeRepository{
     return themeLocalDatasource.cacheThemeData(mode: mode);
   }
 
+  @override
+  Future<Either<Failure, bool>> getUseSytemTheme() async {
+   try {
+      final themeMode = await themeLocalDatasource.getUseSystemTheme();
+      return Right(themeMode);
+    } catch (e) {
+      return Left(CacheFailure());
+    }
+  }
+
+  @override
+  Future<void> setUseSytemTheme({required bool useSystemTheme}) {
+    return themeLocalDatasource.cacheUseSystemTheme(useSystemTheme: useSystemTheme);
+  }
 }

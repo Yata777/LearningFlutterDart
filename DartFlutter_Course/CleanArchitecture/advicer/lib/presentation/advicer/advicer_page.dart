@@ -3,7 +3,9 @@ import 'package:advicer/presentation/advicer/widgets/advice_field.dart';
 import 'package:advicer/presentation/advicer/widgets/error_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
+import '../../application/theme/theme_service.dart';
 import 'widgets/custom_button.dart';
 
 class AdvicerPage extends StatelessWidget {
@@ -16,6 +18,13 @@ class AdvicerPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
+          actions: [
+            Switch(
+              value: Provider.of<ThemeService>(context).isDarkModeOn,
+              onChanged: (_){
+                Provider.of<ThemeService>(context, listen: false).toggleTheme();
+              },)
+          ],
           title: Text("Advicer", style: themeData.textTheme.headlineLarge)),
       body: Center(
         child: Padding(

@@ -1,3 +1,4 @@
+import 'package:advicer/application/theme/theme_service.dart';
 import 'package:advicer/domain/usecases/advicer_usecases.dart';
 import 'package:advicer/infrastructure/datasources/advicer_remote_datasource.dart';
 import 'package:advicer/infrastructure/datasources/theme_local_datasource.dart';
@@ -18,6 +19,7 @@ Future<void> init() async {
 
   //! application layer 
   sl.registerFactory(() => AdvicerBloc(usecases: sl()));
+  sl.registerLazySingleton<ThemeService>(() => ThemeServiceImpl(themeRepository: sl()));
 
   //! Usecases
   sl.registerLazySingleton(() => AdvicerUsecases(advicerRepository: sl()));

@@ -3,32 +3,49 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const CACHED_THEME_MODE = 'CACHED_THEME_MODE';
 
-abstract class ThemeLocalDatasource{
-Future<bool> getCachedThemeData();
+const CACHED_USE_SYSTEM_THEME = 'CACHED_USE_SYSTEM_THEME';
 
-Future<void> cacheThemeData({required bool mode});
+abstract class ThemeLocalDatasource {
+  Future<bool> getCachedThemeData();
+  Future<bool> getUseSystemTheme();
+
+  Future<void> cacheThemeData({required bool mode});
+  Future<void> cacheUseSystemTheme({required bool useSystemTheme});
 }
 
-class ThemeLocalDatasourceImpl implements ThemeLocalDatasource{
+class ThemeLocalDatasourceImpl implements ThemeLocalDatasource {
   final SharedPreferences sharedPreferences;
   ThemeLocalDatasourceImpl({required this.sharedPreferences});
-  
+
   @override
   Future<void> cacheThemeData({required bool mode}) {
     return sharedPreferences.setBool(CACHED_THEME_MODE, mode);
   }
-  
+
   @override
   Future<bool> getCachedThemeData() {
     final modeBool = sharedPreferences.getBool(CACHED_THEME_MODE);
-    if(modeBool != null){
+
+    if (modeBool != null) {
       return Future.value(modeBool);
-    }
-    else{
+    } else {
       throw CacheException();
     }
-    
   }
 
+  @override
+  Future<void> cacheUseSystemTheme({required bool useSystemTheme}) {
+    return sharedPreferences.setBool(CACHED_USE_SYSTEM_THEME, useSystemTheme);
+  }
 
+  @override
+  Future<bool> getUseSystemTheme() {
+    final useSystemTheme = sharedPreferences.getBool(CACHED_USE_SYSTEM_THEME);
+
+    if (useSystemTheme != null) {
+      return Future.value(useSystemTheme);
+    } else {
+      throw CacheException();
+    }
+  }
 }
